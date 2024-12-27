@@ -1,0 +1,4 @@
+Sitemap: https://g-gundam.github.io/sitemap.xml
+
+User-agent: *
+Disallow:

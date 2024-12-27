@@ -1,0 +1,260 @@
+<!doctype html> <html lang=en > <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" /> <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>head> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/atom-one-dark-reasonable.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/tufte.css"> <link rel=stylesheet  href="/css/latex.css"> <link rel=stylesheet  href="/css/adjust.css"> <link rel=icon  href="/assets/favicon.png"> <title>Introduction to TradingPipeline.jl</title> <div id=layout > <div id=menu > <ul> <li><a href="/">Home</a> <li><a href="/about/">About</a> <li><a href="/notebooks/">Notebooks</a> </ul> </div> <div id=main > <div class=franklin-content ><h1 id=an_introduction_to_tradingpipelinejl ><a href="#an_introduction_to_tradingpipelinejl" class=header-anchor >An Introduction to TradingPipeline.jl</a></h1> <ul> <li><p>I am unsure about how algorithmic trading systems should be structured, so I have been doing a lot of exploring.</p> <li><p>Instead of making a framework, I&#39;ve decided to write small libraries that do specific tasks.</p> <li><p>They still needed to be joined together in a cohesive way, and I had no clue how to do that until I saw Lucky.jl.</p> <ul> <li><p>Although TradingPipeline.jl is quite different from Lucky.jl in many ways, it is nevertheless influenced by how it used Rocket.jl to connect async tasks together.</p> <li><p>Before I saw his work, I was stuck on the problem of how to organize this data flow for YEARS &#40;like a retard&#41;.</p> <li><p>It was a huge revelation for me, so thank you, Olivier.</p> </ul> </ul> <h2 id=introduction_to_strategies ><a href="#introduction_to_strategies" class=header-anchor >Introduction to Strategies</a></h2> <span class=marginnote > Questions of how to open a position (limit orders vs market orders), where to put and move stop losses, position sizing, etc. will be answered by other parts of the code ...eventually. </span> <h3 id=goals ><a href="#goals" class=header-anchor >Goals</a></h3> <ul> <li><p>Portability between exchanges / Exchange agnostic</p> <li><p>Relative ease of implementation</p> </ul> <p>To achieve these two goals, I decided to make strategies only responsible for answering 4 questions,</p> <ul> <li><p>When should a long position be opened?</p> <li><p>When should a long position be closed?</p> <li><p>When should a short position be opened?</p> <li><p>When should a short position be closed?</p> </ul> <p>Furthermore, if you want to write a long-only strategy, just don&#39;t implement the <code>*_short</code> functions, and a catch-all will default them to false.</p> <h3 id=interface ><a href="#interface" class=header-anchor >Interface</a></h3> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> TradingPipeline as TP</code></pre>
+<ul>
+<li><p><code>TP.should_open_long&#40;strategy::AbstractStrategy&#41;</code></p>
+
+<li><p><code>TP.should_close_long&#40;strategy::AbstractStrategy&#41;</code></p>
+
+<li><p><code>TP.should_open_short&#40;strategy::AbstractStrategy&#41;</code></p>
+
+<li><p><code>TP.should_close_short&#40;strategy::AbstractStrategy&#41;</code></p>
+
+<li><p><code>TP.load_strategy&#40;strategy::AbstractStrategy; kwargs...&#41;</code></p>
+
+</ul>
+
+<span class=marginnote >
+  ReversedSeries.jl is influenced by my experience with TradingView's PineScript language.
+  I believe viewing series data in reverse like PineScript does
+  makes it easier to write analysis functions, so I wanted to make that available in Julia.
+</span>
+
+<h3 id=example_tradingpipelinehmastrategy ><a href="#example_tradingpipelinehmastrategy" class=header-anchor >Example: TradingPipeline.HMAStrategy</a></h3>
+<pre><code class="julia hljs"><span class=hljs-keyword >import</span> TradingPipeline as TP
+<span class=hljs-keyword >using</span> OnlineTechnicalIndicators <span class=hljs-comment ># HMA</span>
+<span class=hljs-keyword >using</span> TechnicalIndicatorCharts  <span class=hljs-comment ># Chart</span>
+<span class=hljs-keyword >using</span> ReversedSeries            <span class=hljs-comment ># ReversedFrame, crossed_up, crossed_down</span>
+
+<span class=hljs-keyword >mutable struct</span> HMAStrategy &lt;: TP.AbstractStrategy
+    <span class=hljs-comment ># You can put whatever state you want inside your strategies.</span>
+    <span class=hljs-comment ># For me, the bare minimum is the chart it&#x27;s using for data,</span>
+    <span class=hljs-comment ># and a reversed view of its DataFrame.  If you&#x27;re in to</span>
+    <span class=hljs-comment ># multi-timeframe analysis, feel free to use as many charts</span>
+    <span class=hljs-comment ># as you want.</span>
+    chart::Chart
+    rf::ReversedFrame
+
+    <span class=hljs-keyword >function</span> HMAStrategy(chart)
+        new(chart, ReversedFrame(chart.df))
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-keyword >function</span> TP.should_open_long(strategy::HMAStrategy)
+    <span class=hljs-comment ># if we&#x27;re neutral and</span>
+    crossed_up(strategy.rf.hma330, strategy.rf.hma440)
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-keyword >function</span> TP.should_close_long(strategy::HMAStrategy)
+    <span class=hljs-comment ># if we&#x27;re long and</span>
+    crossed_down(strategy.rf.hma330, strategy.rf.hma440)
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-string >&quot;&quot;&quot;
+Initialize a long-only 330/440 HMA cross strategy.
+Return a chart_subject and strategy_subject.
+&quot;&quot;&quot;</span>
+<span class=hljs-keyword >function</span> TP.load_strategy(::<span class=hljs-built_in >Type</span>{HMAStrategy}; symbol=<span class=hljs-string >&quot;BTCUSD&quot;</span>, tf=Hour(<span class=hljs-number >4</span>))
+    hma_chart = Chart(
+        symbol, tf,
+        indicators = [
+            HMA{<span class=hljs-built_in >Float64</span>}(;period=<span class=hljs-number >330</span>),
+            HMA{<span class=hljs-built_in >Float64</span>}(;period=<span class=hljs-number >440</span>)
+        ],
+        visuals = [
+            <span class=hljs-built_in >Dict</span>(
+                :label_name =&gt; <span class=hljs-string >&quot;HMA 330&quot;</span>,
+                :line_color =&gt; <span class=hljs-string >&quot;#26c6da&quot;</span>,
+                :line_width =&gt; <span class=hljs-number >2</span>
+            ),
+            <span class=hljs-built_in >Dict</span>(
+                :label_name =&gt; <span class=hljs-string >&quot;HMA 440&quot;</span>,
+                :line_color =&gt; <span class=hljs-string >&quot;#64b5f6&quot;</span>,
+                :line_width =&gt; <span class=hljs-number >3</span>
+            )
+        ]
+    )
+    all_charts = <span class=hljs-built_in >Dict</span>(:trend =&gt; hma_chart)
+    chart_subject = ChartSubject(charts=all_charts)
+    strategy = HMAStrategy(hma_chart)
+    strategy_subject = StrategySubject(;strategy)
+    <span class=hljs-keyword >return</span> (chart_subject, strategy_subject)
+<span class=hljs-keyword >end</span></code></pre>
+<h2 id=running_a_simulation ><a href="#running_a_simulation" class=header-anchor >Running a Simulation</a></h2>
+<h3 id=the_setup_do_this_once ><a href="#the_setup_do_this_once" class=header-anchor >The Setup: Do This Once</a></h3>
+<pre><code class="julia hljs"><span class=hljs-comment ># load modules</span>
+<span class=hljs-keyword >using</span> CryptoMarketData
+<span class=hljs-keyword >using</span> TechnicalIndicatorCharts
+<span class=hljs-keyword >using</span> ReversedSeries
+<span class=hljs-keyword >import</span> ExchangeOperations as XO
+
+<span class=hljs-keyword >using</span> UnPack
+<span class=hljs-keyword >using</span> LightweightCharts
+
+<span class=hljs-keyword >import</span> TradingPipeline as TP
+<span class=hljs-keyword >import</span> HierarchicalStateMachines as HSM
+<span class=hljs-keyword >using</span> TradingPipeline
+<span class=hljs-keyword >using</span> TradingPipeline: simulate, GoldenCrossStrategy, HMAStrategy, df_candles_observable
+<span class=hljs-keyword >using</span> TradingPipeline: load_strategy, report
+
+<span class=hljs-comment ># get data</span>
+pancakeswap = PancakeSwap()
+btcusd1m = load(pancakeswap, <span class=hljs-string >&quot;BTCUSD&quot;</span>; span=Date(<span class=hljs-string >&quot;2023-07-01&quot;</span>):Date(<span class=hljs-string >&quot;2024-11-29&quot;</span>))
+candle_observable = df_candles_observable(btcusd1m)</code></pre>
+<h3 id=actually_running_the_simulation ><a href="#actually_running_the_simulation" class=header-anchor >Actually Running the Simulation</a></h3>
+<pre><code class="julia hljs"><span class=hljs-meta >@unpack</span> simulator_session, chart_subject = simulate(candle_observable, HMAStrategy);
+rdf = report(simulator_session)</code></pre>
+
+<span class=marginnote >
+  In the REPL, I often use @unpack, but in a notebook, I find it more convenient to capture
+  named tuple in a variable like `r`.
+</span>
+
+<p>You can rerun those last 2 lines as many times as you want.  Once all the setup before that is done, you don&#39;t have to repeat it.  Data loading is usually the slowest part of this process, but you don&#39;t have to do it often.  Once you have that <code>candle_observable</code>, you can keep reusing it over and over again.</p>
+<h3 id=visualizing_your_trades ><a href="#visualizing_your_trades" class=header-anchor >Visualizing Your Trades</a></h3>
+<p>The <code>chart_subject</code> can often have multiple charts in it, but in this case we only have one. To visualize it, do this:</p>
+<pre><code class="julia hljs">chart = chart_subject[:trend]
+visualize((chart, simulator_session); min_height=<span class=hljs-number >800</span>)</code></pre>
+<p>It doesn&#39;t matter what timeframe the charts are in.  Even if the chart you give it doesn&#39;t have the exact timestamp the trade entered and exited on, it&#39;ll try to get as close as the chart&#39;s timeframe allows and draw the lines accordingly.</p>
+<h2 id=my_simulation_pipeline ><a href="#my_simulation_pipeline" class=header-anchor >My Simulation Pipeline</a></h2>
+<p>This is how data flows while <code>simulate</code> is running.</p>
+<p><img src="/assets/simulation-pipeline.png" alt="My Simulation Pipeline" /></p>
+<ul>
+<li><p><code>candle_observable</code> is currently backed by a DataFrame for backtesting.</p>
+
+<li><p>If I wanted to do livetesting, it could be backed by a websocket.</p>
+
+<li><p>If I wanted to do live trading, </p>
+<ul>
+<li><p><code>simulator_session_actor</code> goes away. </p>
+
+<li><p><code>simulator_exchange_driver_subject</code> gets swapped out for a real exchange driver.</p>
+
+<li><p><code>simulator_exchange_fill_subject</code> also gets swapped out for an exchange-specific implementation.</p>
+
+</ul>
+
+</ul>
+<h3 id=chartsubject ><a href="#chartsubject" class=header-anchor >ChartSubject</a></h3>
+<ul>
+<li><p>This consumes <code>Candle</code>s and incrementally builds as many charts in as many timeframes as you want.</p>
+
+<li><p>I treat its contents like shared memory, but by gentleman&#39;s agreement, only <code>ChartSubject</code> is allowed to write to the charts.</p>
+
+<li><p>Everyone else just reads, and so far, it&#39;s only the strategy that&#39;s looking.</p>
+
+</ul>
+<h3 id=strategysubjects ><a href="#strategysubjects" class=header-anchor >StrategySubjects</a></h3>
+
+<span class=marginnote >
+I found an unpublished library called HierarchicalStateMachines.jl, and I asked the author to publish it,
+because I wanted to use it.  He graciously agreed to do it.  Thank you, Andrew.
+</span>
+
+<ul>
+<li><p>This consumes data from two sources.</p>
+<ul>
+<li><p><code>Tuple&#123;Symbol, Candle&#125;</code> notifications from ChartSubject.</p>
+
+<li><p><code>ExchangeFill</code> notifications from an ExchangeFillSubject.</p>
+
+</ul>
+
+<li><p>Its job is to manage the lifecycle of a trade using a Strategy.</p>
+
+</ul>
+<p><img src="/assets/market-order-strategy-state-machine.png" alt="the mighty hsm" /></p>
+<ul>
+<li><p>The state machine you see above is managing the lifecycle of a trade.</p>
+
+<li><p>This was actually the simplest state machine I could make for this task.</p>
+<ul>
+<li><p>It assumes market orders will open and close positions with complete fills.</p>
+
+<li><p>Stop orders are also assumed to completely close a position.</p>
+
+</ul>
+
+<li><p>More elaborate state machines may be created in the future if people want to do things like:</p>
+<ul>
+<li><p>Take partial profit during the lifetime of a trade</p>
+
+<li><p>Use limit orders instead of market orders to open and close positions</p>
+
+</ul>
+
+<li><p>For now, though, let&#39;s keep it simple.</p>
+
+</ul>
+<h3 id=exchangedriversubjects ><a href="#exchangedriversubjects" class=header-anchor >ExchangeDriverSubjects</a></h3>
+<ul>
+<li><p>It consumes messages of type <code>TradeDecision.T</code> from the StrategySubject.</p>
+<ul>
+<li><p>The actual API calls to create orders that open or close a position comes from here.</p>
+
+</ul>
+
+<li><p>There is currently only one called <code>SimulatorExchangeDriverSubject</code>.</p>
+<ul>
+<li><p>It is really dumb.</p>
+
+<li><p>It hard codes the position size to 1.</p>
+
+</ul>
+
+<li><p>Every supported exchange will have at least one driver.</p>
+<ul>
+<li><p>Some exchanges may have more than one driver.</p>
+
+<li><p>For example, if you want to use limit orders instead of market orders, that would require a different driver even though you&#39;re using the same exchange.</p>
+
+</ul>
+
+<li><p>I&#39;m thinking of putting a lot of responsiblities here or in adjacent Rocket subjects that have yet to be written.</p>
+<ul>
+<li><p>Position sizing decisions will probably happen here.</p>
+
+<li><p>Stop loss management may be adjacent to this.</p>
+
+</ul>
+
+</ul>
+<h3 id=exchangefillsubjects ><a href="#exchangefillsubjects" class=header-anchor >ExchangeFillSubjects</a></h3>
+<ul>
+<li><p>This consumes exchnage specific fill messages and translates them to more generic fill messages before sending them back to the StrategySubject.</p>
+
+<li><p>There is currently only one called <code>SimulatorExchangeFillSubject</code>.</p>
+
+<li><p>Every time you try to open or close a position, you want to make sure you get an acknowledgment from the exchange that it went through before moving on.</p>
+
+<li><p>That&#39;s why the state machine from the StrategySubject makes a distinction between wanting to be long versus actually being long.</p>
+
+<li><p>Also, are often hit at unpredictable times, so this will let the StrategySubject know when that happens so that it can change its state appropriately.</p>
+
+</ul>
+<h2 id=i_have_a_lot_more_work_to_do ><a href="#i_have_a_lot_more_work_to_do" class=header-anchor >I have a lot more work to do.</a></h2>
+<ul>
+<li><p>As I got further down the document, the code I described became less and less mature.</p>
+
+<li><p>The biggest reason for that is that it&#39;s newly explored territory for me.</p>
+
+<li><p>Until I started using Rocket.jl, I couldn&#39;t really explore this area, so I&#39;m just now starting to put serious thought into how this part of the pipeline should work.</p>
+
+</ul>
+<p>If you&#39;ve made it this far, thanks. It&#39;s a lot to read, but I tried to make it as easy to take in as I could.</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> <a href="https://github.com/g-gundam">@g-gundam</a>. Last modified: December 27, 2024.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div>
+        </div> 
+    </div> 
+    
+    
+        <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
+
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const lightbox = GLightbox({ selector: ".franklin-content img"})
+      })
+    </script>
