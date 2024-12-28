@@ -3,10 +3,11 @@
 :root {
     --bg: #24273a;
     --fg: #cad3f5;
-    --block-background: #333;
+    --block-background: var(--gradient-target);
     --header: #f5a97f;
     --header3: #eed49f;
     --link: #90708c;
+    --gradient-target: #101119;
 }
 
 .franklin-content img {
@@ -221,8 +222,8 @@ a:visited { color: var(--link); }
 
 a:link {
   text-decoration: none;
-  background: -webkit-linear-gradient(var(--bg), var(--bg)), -webkit-linear-gradient(var(--bg), var(--bg)), -webkit-linear-gradient(#333, #333);
-  background: linear-gradient(var(--bg), var(--bg)), linear-gradient(var(--bg), var(--bg)), linear-gradient(#333, #333);
+  background: -webkit-linear-gradient(var(--bg), var(--bg)), -webkit-linear-gradient(var(--bg), var(--bg)), -webkit-linear-gradient(var(--gradient-target), var(--gradient-target));
+  background: linear-gradient(var(--bg), var(--bg)), linear-gradient(var(--bg), var(--bg)), linear-gradient(var(--gradient-target), var(--gradient-target));
   -webkit-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
   -moz-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
   background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
