@@ -111,7 +111,7 @@ rdf = report(simulator_session)</code></pre>
 <p>You can rerun those last 2 lines as many times as you want.  Once all the setup before that is done, you don&#39;t have to repeat it.  Data loading is usually the slowest part of this process, but you don&#39;t have to do it often.  Once you have that <code>candle_observable</code>, you can keep reusing it over and over again.</p>
 <h3 id=visualizing_your_trades ><a href="#visualizing_your_trades" class=header-anchor >Visualizing Your Trades</a></h3>
 <p>The <code>chart_subject</code> can often have multiple charts in it, but in this case we only have one. To visualize it, do this:</p>
-<pre><code class="julia hljs">chart = chart_subject[:trend]
+<pre><code class="julia hljs">chart = chart_subject.charts[:trend]
 visualize((chart, simulator_session); min_height=<span class=hljs-number >800</span>)</code></pre>
 <p>It doesn&#39;t matter what timeframe the charts are in.  Even if the chart you give it doesn&#39;t have the exact timestamp the trade entered and exited on, it&#39;ll try to get as close as the chart&#39;s timeframe allows and draw the lines accordingly.</p>
 <h2 id=my_simulation_pipeline ><a href="#my_simulation_pipeline" class=header-anchor >My Simulation Pipeline</a></h2>
@@ -239,6 +239,12 @@ because I wanted to use it.  He graciously agreed to do it.  Thank you, Andrew.
 <li><p>Until I started using Rocket.jl, I couldn&#39;t really explore this area, so I&#39;m just now starting to put serious thought into how this part of the pipeline should work.</p>
 
 </ul>
+
+<span class=marginnote >
+  Also, special thanks to those who helped me with the JavaScript incarnation of this work years ago.
+  Some of this might look familiar.
+</span>
+
 <p>If you&#39;ve made it this far, thanks. It&#39;s a lot to read, but I tried to make it as easy to take in as I could.</p>
 <div class=page-foot >
     <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> <a href="https://github.com/g-gundam">@g-gundam</a>. Last modified: December 28, 2024.
