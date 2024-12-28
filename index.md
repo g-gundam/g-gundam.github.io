@@ -249,7 +249,7 @@ Thank you, Andrew.
 - There is currently only one called `SimulatorExchangeFillSubject`.
 - Every time you try to open or close a position, you want to make sure you get an acknowledgment from the exchange that it went through before moving on.
 - That's why the state machine from the StrategySubject makes a distinction between wanting to be long versus actually being long.
-- Also, are often hit at unpredictable times, so this will let the StrategySubject know when that happens so that it can change its state appropriately.
+- Also, stop losses are often hit at unpredictable times, so this will let the StrategySubject know when that happens so that it can change its state appropriately.
 
 ## I have a lot more work to do.
 
