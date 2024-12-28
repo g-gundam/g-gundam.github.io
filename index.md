@@ -6,8 +6,8 @@
 [TradingPipeline.jl](https://github.com/g-gundam/TradingPipeline.jl)
 
 - I am unsure about how algorithmic trading systems should be structured, so I have been doing a lot of exploring.
-- Instead of making a framework, I've decided to write small libraries that do specific tasks.
-- They still needed to be joined together in a cohesive way, and I had no clue how to do that until I saw Lucky.jl.
+- Instead of making a framework, I decided to write small libraries that do specific tasks.
+- They still needed to be joined together in a cohesive way, and I had no clue how to do that until I saw [Lucky.jl](https://github.com/oliviermilla/Lucky.jl).
   + Although TradingPipeline.jl is quite different from Lucky.jl in many ways, it is nevertheless influenced by how it used Rocket.jl to connect async tasks together.
   + Before I saw his work, I was stuck on the problem of how to organize this data flow for YEARS (like a retard).
   + It was a huge revelation for me, so thank you, Olivier.
@@ -49,7 +49,7 @@ import TradingPipeline as TP
 
 ~~~
 <span class="marginnote">
-  ReversedSeries.jl is influenced by my experience with TradingView's PineScript language.
+  <a target="_blank" href="https://github.com/g-gundam/ReversedSeries.jl">ReversedSeries.jl</a> is influenced by my experience with TradingView's PineScript language.
   I believe viewing series data in reverse like PineScript does
   makes it easier to write analysis functions, so I wanted to make that available in Julia.
 </span>
@@ -177,6 +177,8 @@ visualize((chart, simulator_session); min_height=800)
 # Respect to whomever came up with this idea in the first place.
 ```
 
+![A Chart Annotated with Trades](/assets/visualize-trades.png)
+
 It doesn't matter what timeframe the charts are in.  Even if the chart you give it doesn't have the
 exact timestamp the trade entered and exited on, it'll try to get as close as the chart's timeframe
 allows and draw the lines accordingly.
@@ -203,19 +205,20 @@ This is how data flows while `simulate` is running.
 
 ### StrategySubjects
 
-~~~
-<span class="marginnote">
-I found an unpublished library called HierarchicalStateMachines.jl, and I asked the author to publish it,
-because I wanted to use it.  He graciously agreed to do it.  Thank you, Andrew.
-</span>
-~~~
-
 - This consumes data from two sources.
   + `Tuple{Symbol, Candle}` notifications from ChartSubject.
   + `ExchangeFill` notifications from an ExchangeFillSubject.
 - Its job is to manage the lifecycle of a trade using a Strategy.
 
 ![the mighty hsm](/assets/market-order-strategy-state-machine.png)
+
+~~~
+<span class="marginnote">
+I found an unpublished library called <a target="_blank" href="https://github.com/AndrewWasHere/HierarchicalStateMachines.jl">HierarchicalStateMachines.jl</a>, 
+and I asked the author to publish it because I wanted to use it, and he graciously agreed.
+Thank you, Andrew.
+</span>
+~~~
 
 - The state machine you see above is managing the lifecycle of a trade.
 - This was actually the simplest state machine I could make for this task.
