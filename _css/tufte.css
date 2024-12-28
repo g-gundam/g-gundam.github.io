@@ -6,6 +6,7 @@
     --block-background: #333;
     --header: #f5a97f;
     --header3: #eed49f;
+    --link: #90708c;
 }
 
 .franklin-content img {
@@ -216,7 +217,7 @@ figure.fullwidth figcaption { margin-right: 24%; }
 
 /* Links: replicate underline that clears descenders */
 a:link,
-a:visited { color: inherit; }
+a:visited { color: var(--link); }
 
 a:link {
   text-decoration: none;
