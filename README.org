@@ -16,4 +16,4 @@
   + I didn't realize it didn't include much support for setting up a blog though.
   + Anyone who wants a blog via Franklin.jl needs to roll their own.
 - Instead of a blog, I started with a few static pages, and maybe I'll turn it into a blog later.
-- The most important thing to do was to host the static export of my [[http://localhost:8000/notebooks/01.hma-4h-improvements/][first backtesting session ever in Pluto.jl]].
+- The most important thing to do was to host the static export of my [[https://g-gundam.github.io/notebooks/01.hma-4h-improvements/][first backtesting session ever in Pluto.jl]].
