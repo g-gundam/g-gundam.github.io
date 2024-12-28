@@ -168,11 +168,13 @@ over and over again.
 ### Visualizing Your Trades
 
 The `chart_subject` can often have multiple charts in it, but in this case we only have one.
-To visualize it, do this:
+To visualize it together with the trades that were executed, do this:
 
 ```julia
 chart = chart_subject.charts[:trend]
 visualize((chart, simulator_session); min_height=800)
+# Multiple dispatch is such a win.
+# Respect to whomever came up with this idea in the first place.
 ```
 
 It doesn't matter what timeframe the charts are in.  Even if the chart you give it doesn't have the
