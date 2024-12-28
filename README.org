@@ -1,0 +1,19 @@
+* g-gundam.github.io
+** Influences
+- https://tony-zorman.com/
+  + I like his take on Tufte.
+  + I eventually want to have a cool table of contents like him.
+  + I'd also like to have a proper blog at one point.
+- https://github.com/catppuccin/emacs
+  + I was using =M-x describe-face= in Emacs to pick out colors for the blog.
+  + My site theme matches is a port of catppuccin-mocha.
+* Log
+** <2024-12-27 Fri> A new site is born.
+- I needed a place to publish a static export of a notebook.
+- I had also wanted to setup a technical blog for a while.
+- I almost used [[https://github.com/loikein/hugo-tufte][hugo-tufte]] for this, but the latest version of Hugo deprecated a bunch of features it was using, and I don't know Hugo well enough to port it.
+- Then I looked at Franklin.jl, and it looked usable.
+  + I didn't realize it didn't include much support for setting up a blog though.
+  + Anyone who wants a blog via Franklin.jl needs to roll their own.
+- Instead of a blog, I started with a few static pages, and maybe I'll turn it into a blog later.
+- The most important thing to do was to host the static export of my [[http://localhost:8000/notebooks/01.hma-4h-improvements/][first backtesting session ever in Pluto.jl]].
