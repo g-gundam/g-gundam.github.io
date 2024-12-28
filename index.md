@@ -171,7 +171,7 @@ The `chart_subject` can often have multiple charts in it, but in this case we on
 To visualize it, do this:
 
 ```julia
-chart = chart_subject[:trend]
+chart = chart_subject.charts[:trend]
 visualize((chart, simulator_session); min_height=800)
 ```
 
@@ -251,6 +251,13 @@ because I wanted to use it.  He graciously agreed to do it.  Thank you, Andrew.
 - As I got further down the document, the code I described became less and less mature.
 - The biggest reason for that is that it's newly explored territory for me.
 - Until I started using Rocket.jl, I couldn't really explore this area, so I'm just now starting to put serious thought into how this part of the pipeline should work.
+
+~~~
+<span class="marginnote">
+  Also, special thanks to those who helped me with the JavaScript incarnation of this work years ago.
+  Some of this might look familiar.
+</span>
+~~~
 
 If you've made it this far, thanks.
 It's a lot to read, but I tried to make it as easy to take in as I could.
