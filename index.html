@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" /> <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/atom-one-dark-reasonable.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/tufte.css"> <link rel=stylesheet  href="/css/latex.css"> <link rel=stylesheet  href="/css/adjust.css"> <link rel=icon  href="/assets/favicon.png"> <title>Introduction to TradingPipeline.jl</title> <div id=layout > <div id=menu > <ul> <li><a href="/">Home</a> <li><a href="/about/">About</a> <li><a href="/notebooks/">Notebooks</a> </ul> </div> <div id=main > <div class=franklin-content ><h1 id=an_introduction_to_tradingpipelinejl ><a href="#an_introduction_to_tradingpipelinejl" class=header-anchor >An Introduction to TradingPipeline.jl</a></h1> <p><a href="https://github.com/g-gundam/TradingPipeline.jl">TradingPipeline.jl</a></p> <ul> <li><p>I am unsure about how algorithmic trading systems should be structured, so I have been doing a lot of exploring.</p> <li><p>Instead of making a framework, I&#39;ve decided to write small libraries that do specific tasks.</p> <li><p>They still needed to be joined together in a cohesive way, and I had no clue how to do that until I saw Lucky.jl.</p> <ul> <li><p>Although TradingPipeline.jl is quite different from Lucky.jl in many ways, it is nevertheless influenced by how it used Rocket.jl to connect async tasks together.</p> <li><p>Before I saw his work, I was stuck on the problem of how to organize this data flow for YEARS &#40;like a retard&#41;.</p> <li><p>It was a huge revelation for me, so thank you, Olivier.</p> </ul> </ul> <h2 id=introduction_to_strategies ><a href="#introduction_to_strategies" class=header-anchor >Introduction to Strategies</a></h2> <span class=marginnote > Questions of how to open a position (limit orders vs market orders), where to put and move stop losses, position sizing, etc. will be answered by other parts of the code ...eventually. </span> <h3 id=goals ><a href="#goals" class=header-anchor >Goals</a></h3> <ul> <li><p>Portability between exchanges / Exchange agnostic</p> <li><p>Relative ease of implementation</p> </ul> <p>To achieve these two goals, I decided to make strategies only responsible for answering 4 questions,</p> <ul> <li><p>When should a long position be opened?</p> <li><p>When should a long position be closed?</p> <li><p>When should a short position be opened?</p> <li><p>When should a short position be closed?</p> </ul> <p>Furthermore, if you want to write a long-only strategy, just don&#39;t implement the <code>*_short</code> functions, and a catch-all will default them to false.</p> <h3 id=interface ><a href="#interface" class=header-anchor >Interface</a></h3> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> TradingPipeline as TP</code></pre>
+<!doctype html> <html lang=en > <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" /> <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/atom-one-dark-reasonable.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/tufte.css"> <link rel=stylesheet  href="/css/latex.css"> <link rel=stylesheet  href="/css/adjust.css"> <link rel=icon  href="/assets/favicon.png"> <title>Introduction to TradingPipeline.jl</title> <div id=layout > <div id=menu > <ul> <li><a href="/">Home</a> <li><a href="/about/">About</a> <li><a href="/notebooks/">Notebooks</a> </ul> </div> <div id=main > <div class=franklin-content ><h1 id=an_introduction_to_tradingpipelinejl ><a href="#an_introduction_to_tradingpipelinejl" class=header-anchor >An Introduction to TradingPipeline.jl</a></h1> <p><a href="https://github.com/g-gundam/TradingPipeline.jl">TradingPipeline.jl</a></p> <ul> <li><p>I am unsure about how algorithmic trading systems should be structured, so I have been doing a lot of exploring.</p> <li><p>Instead of making a framework, I decided to write small libraries that do specific tasks.</p> <li><p>They still needed to be joined together in a cohesive way, and I had no clue how to do that until I saw <a href="https://github.com/oliviermilla/Lucky.jl">Lucky.jl</a>.</p> <ul> <li><p>Although TradingPipeline.jl is quite different from Lucky.jl in many ways, it is nevertheless influenced by how it used Rocket.jl to connect async tasks together.</p> <li><p>Before I saw his work, I was stuck on the problem of how to organize this data flow for YEARS &#40;like a retard&#41;.</p> <li><p>It was a huge revelation for me, so thank you, Olivier.</p> </ul> </ul> <h2 id=introduction_to_strategies ><a href="#introduction_to_strategies" class=header-anchor >Introduction to Strategies</a></h2> <span class=marginnote > Questions of how to open a position (limit orders vs market orders), where to put and move stop losses, position sizing, etc. will be answered by other parts of the code ...eventually. </span> <h3 id=goals ><a href="#goals" class=header-anchor >Goals</a></h3> <ul> <li><p>Portability between exchanges / Exchange agnostic</p> <li><p>Relative ease of implementation</p> </ul> <p>To achieve these two goals, I decided to make strategies only responsible for answering 4 questions,</p> <ul> <li><p>When should a long position be opened?</p> <li><p>When should a long position be closed?</p> <li><p>When should a short position be opened?</p> <li><p>When should a short position be closed?</p> </ul> <p>Furthermore, if you want to write a long-only strategy, just don&#39;t implement the <code>*_short</code> functions, and a catch-all will default them to false.</p> <h3 id=interface ><a href="#interface" class=header-anchor >Interface</a></h3> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> TradingPipeline as TP</code></pre>
 <ul>
 <li><p><code>TP.should_open_long&#40;strategy::AbstractStrategy&#41;</code></p>
 
@@ -13,7 +13,7 @@
 </ul>
 
 <span class=marginnote >
-  ReversedSeries.jl is influenced by my experience with TradingView's PineScript language.
+  <a target=_blank  href="https://github.com/g-gundam/ReversedSeries.jl">ReversedSeries.jl</a> is influenced by my experience with TradingView's PineScript language.
   I believe viewing series data in reverse like PineScript does
   makes it easier to write analysis functions, so I wanted to make that available in Julia.
 </span>
@@ -115,6 +115,7 @@ rdf = report(simulator_session)</code></pre>
 visualize((chart, simulator_session); min_height=<span class=hljs-number >800</span>)
 <span class=hljs-comment ># Multiple dispatch is such a win.</span>
 <span class=hljs-comment ># Respect to whomever came up with this idea in the first place.</span></code></pre>
+<p><img src="/assets/visualize-trades.png" alt="A Chart Annotated with Trades" /></p>
 <p>It doesn&#39;t matter what timeframe the charts are in.  Even if the chart you give it doesn&#39;t have the exact timestamp the trade entered and exited on, it&#39;ll try to get as close as the chart&#39;s timeframe allows and draw the lines accordingly.</p>
 <h2 id=my_simulation_pipeline ><a href="#my_simulation_pipeline" class=header-anchor >My Simulation Pipeline</a></h2>
 <p>This is how data flows while <code>simulate</code> is running.</p>
@@ -145,12 +146,6 @@ visualize((chart, simulator_session); min_height=<span class=hljs-number >800</s
 
 </ul>
 <h3 id=strategysubjects ><a href="#strategysubjects" class=header-anchor >StrategySubjects</a></h3>
-
-<span class=marginnote >
-I found an unpublished library called HierarchicalStateMachines.jl, and I asked the author to publish it,
-because I wanted to use it.  He graciously agreed to do it.  Thank you, Andrew.
-</span>
-
 <ul>
 <li><p>This consumes data from two sources.</p>
 <ul>
@@ -164,6 +159,13 @@ because I wanted to use it.  He graciously agreed to do it.  Thank you, Andrew.
 
 </ul>
 <p><img src="/assets/market-order-strategy-state-machine.png" alt="the mighty hsm" /></p>
+
+<span class=marginnote >
+I found an unpublished library called <a target=_blank  href="https://github.com/AndrewWasHere/HierarchicalStateMachines.jl">HierarchicalStateMachines.jl</a>, 
+and I asked the author to publish it because I wanted to use it, and he graciously agreed.
+Thank you, Andrew.
+</span>
+
 <ul>
 <li><p>The state machine you see above is managing the lifecycle of a trade.</p>
 
