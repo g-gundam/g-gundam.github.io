@@ -1,6 +1,6 @@
 * g-gundam.github.io
 ** Influences
-- https://tony-zorman.com/
+- https://tony-zorman.com/ // https://github.com/slotThe/slotThe.github.io
   + I like his take on Tufte.
   + I eventually want to have a cool table of contents like him.
   + I'd also like to have a proper blog at one point.
