@@ -6,7 +6,7 @@
   + I'd also like to have a proper blog at one point.
 - https://github.com/catppuccin/emacs
   + I was using =M-x describe-face= in Emacs to pick out colors for the blog.
-  + My site theme matches is a port of catppuccin-mocha.
+  + My site theme is a port of catppuccin-mocha.
 * Log
 ** <2024-12-27 Fri> A new site is born.
 - I needed a place to publish a static export of a notebook.
