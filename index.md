@@ -3,7 +3,7 @@
 
 # An Introduction to TradingPipeline.jl
 
-https://github.com/g-gundam/TradingPipeline.jl
+[TradingPipeline.jl](https://github.com/g-gundam/TradingPipeline.jl)
 
 - I am unsure about how algorithmic trading systems should be structured, so I have been doing a lot of exploring.
 - Instead of making a framework, I've decided to write small libraries that do specific tasks.
