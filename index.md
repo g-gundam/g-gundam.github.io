@@ -245,7 +245,7 @@ Thank you, Andrew.
 
 ### ExchangeFillSubjects
 
-- This consumes exchnage specific fill messages and translates them to more generic fill messages before sending them back to the StrategySubject.
+- This consumes exchange-specific fill messages and translates them to more generic fill messages before sending them back to the StrategySubject.
 - There is currently only one called `SimulatorExchangeFillSubject`.
 - Every time you try to open or close a position, you want to make sure you get an acknowledgment from the exchange that it went through before moving on.
 - That's why the state machine from the StrategySubject makes a distinction between wanting to be long versus actually being long.
