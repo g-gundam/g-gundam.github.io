@@ -227,6 +227,8 @@ Thank you, Andrew.
 - More elaborate state machines may be created in the future if people want to do things like:
   + Take partial profit during the lifetime of a trade
   + Use limit orders instead of market orders to open and close positions
+  + Reverse a position with a large order that simultaneously closes the current position and opens a new one
+  + Open a position with a stop order
 - For now, though, let's keep it simple.
 
 ### ExchangeDriverSubjects
