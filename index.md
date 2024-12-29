@@ -9,7 +9,7 @@
 - Instead of making a framework, I decided to write small libraries that do specific tasks.
 - They still needed to be joined together in a cohesive way, and I had no clue how to do that until I saw [Lucky.jl](https://github.com/oliviermilla/Lucky.jl).
   + Although TradingPipeline.jl is quite different from Lucky.jl in many ways, it is nevertheless influenced by how it used Rocket.jl to connect async tasks together.
-  + Before I saw his work, I was stuck on the problem of how to organize this data flow for YEARS (like a retard).
+  + Before I saw his work, I was stuck on the problem of how to organize this data flow for YEARS.
   + It was a huge revelation for me, so thank you, Olivier.
 
 ## Introduction to Strategies
