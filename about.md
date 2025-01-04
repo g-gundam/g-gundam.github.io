@@ -1,3 +1,5 @@
+@def title = "About"
+
 # About
 
 - The g-gundam account originally started out as a way to post code on 4chan without doxxing myself.
