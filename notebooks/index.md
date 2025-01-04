@@ -4,6 +4,8 @@
 
 ## [01.hma-4h-improvements.jl](/notebooks/01.hma-4h-improvements/)
 
+2024-12-27
+
 - This is a static export of the first time I was able to iteratively develop a new strategy from within a Pluto.jl notebook.
 - I started off by running the `TP.HMAStrategy` that comes with TradingPipeline.jl.
 - It had 4 wins and 4 losses trading in the bullish period from 2023-07-01 to 2024-11-29 on BTCUSD using data previously downloaded from PancakeSwap.

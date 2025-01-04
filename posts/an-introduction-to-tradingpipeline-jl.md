@@ -3,6 +3,8 @@
 
 # An Introduction to TradingPipeline.jl
 
+2024-12-27
+
 [TradingPipeline.jl](https://github.com/g-gundam/TradingPipeline.jl)
 
 - I am unsure about how algorithmic trading systems should be structured, so I have been doing a lot of exploring.
