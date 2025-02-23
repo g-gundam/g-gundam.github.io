@@ -4,7 +4,7 @@ Add here global page variables to use throughout your website.
 +++
 author = "<a href=\"https://github.com/g-gundam\">@g-gundam</a>"
 mintoclevel = 2
-title = "/g/"
+title = "Home"
 
 # uncomment and adjust the following line if the expected base URL of your website is something like [www.thebase.com/yourproject/]
 # please do read the docs on deployment to avoid common issues: https://franklinjl.org/workflow/deploy/#deploying_your_website
@@ -17,10 +17,11 @@ title = "/g/"
 ignore = ["node_modules/"]
 
 # RSS (the website_{title, descr, url} must be defined to get RSS)
-generate_rss = false
-website_title = "/g/"
+generate_rss = true
+website_title = "g-gundam.github.io"
 website_descr = "Exploring Automated Trading with Julia"
 website_url   = "https://g-gundam.github.io/"
+rss_full_content = true
 +++
 
 <!--

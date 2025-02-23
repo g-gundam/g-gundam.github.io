@@ -1,4 +1,3 @@
-@def title = "@g-gundam"
 @def tags = ["trading", "julia"]
 
 # An Introduction to TradingPipeline.jl

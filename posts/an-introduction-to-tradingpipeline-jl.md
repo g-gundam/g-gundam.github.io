@@ -1,5 +1,6 @@
 @def title = "Introduction to TradingPipeline.jl"
 @def tags = ["trading", "julia"]
+@def rss = "Provide an overview of how backtesting works in TradingPipeline.jl."
 
 # An Introduction to TradingPipeline.jl
 
