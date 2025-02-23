@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:media="http://search.yahoo.com/mrss/"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:georss="http://www.georss.org/georss">
+
+  <channel>
+    <title>
+      <![CDATA[  g-gundam.github.io  ]]>
+    </title>
+    <link> https://g-gundam.github.io/ </link>
+    <description>
+      <![CDATA[  Exploring Automated Trading with Julia  ]]>
+    </description>
+    <atom:link
+      href="https://g-gundam.github.io/feed.xml"
+      rel="self"
+      type="application/rss+xml" />
+
+
+<item>
+  <title>
+    <![CDATA[  Introduction to TradingPipeline.jl  ]]>
+  </title>
+  <link> https://g-gundam.github.io/posts/an-introduction-to-tradingpipeline-jl/index.html </link>
+  <guid> https://g-gundam.github.io/posts/an-introduction-to-tradingpipeline-jl/index.html </guid>
+  <description>
+    <![CDATA[  Provide an overview of how backtesting works in TradingPipeline.jl.  ]]>
+  </description>  
+  
+  <content:encoded>
+    <![CDATA[  <h1 id="an_introduction_to_tradingpipelinejl">An Introduction to TradingPipeline.jl</h1>
+<p>2024-12-27</p>
+<p><a href="https://github.com/g-gundam/TradingPipeline.jl">TradingPipeline.jl</a></p>
+<ul>
+<li><p>I am unsure about how algorithmic trading systems should be structured, so I have been doing a lot of exploring.</p>
+</li>
+<li><p>Instead of making a framework, I decided to write small libraries that do specific tasks.</p>
+</li>
+<li><p>They still needed to be joined together in a cohesive way, and I had no clue how to do that until I saw <a href="https://github.com/oliviermilla/Lucky.jl">Lucky.jl</a>.</p>
+<ul>
+<li><p>Although TradingPipeline.jl is quite different from Lucky.jl in many ways, it is nevertheless influenced by how it used Rocket.jl to connect async tasks together.</p>
+</li>
+<li><p>Before I saw his work, I was stuck on the problem of how to organize this data flow for YEARS.</p>
+</li>
+<li><p>It was a huge revelation for me, so thank you, Olivier.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="introduction_to_strategies">Introduction to Strategies</h2><span class="marginnote">
+  Questions of how to open a position (limit orders vs market orders), where to put and move stop losses, position sizing, etc. will be answered by other parts of the code ...eventually.
+</span><h3 id="goals">Goals</h3>
+<ul>
+<li><p>Portability between exchanges / Exchange agnostic</p>
+</li>
+<li><p>Relative ease of implementation</p>
+</li>
+</ul>
+<p>To achieve these two goals, I decided to make strategies only responsible for answering 4 questions,</p>
+<ul>
+<li><p>When should a long position be opened?</p>
+</li>
+<li><p>When should a long position be closed?</p>
+</li>
+<li><p>When should a short position be opened?</p>
+</li>
+<li><p>When should a short position be closed?</p>
+</li>
+</ul>
+<p>Furthermore, if you want to write a long-only strategy, just don&#39;t implement the <code>*_short</code> functions, and a catch-all will default them to false.</p>
+<h3 id="interface">Interface</h3>
+<pre><code class="language-julia">import TradingPipeline as TP</code></pre>
+<ul>
+<li><p><code>TP.should_open_long&#40;strategy::AbstractStrategy&#41;</code></p>
+</li>
+<li><p><code>TP.should_close_long&#40;strategy::AbstractStrategy&#41;</code></p>
+</li>
+<li><p><code>TP.should_open_short&#40;strategy::AbstractStrategy&#41;</code></p>
+</li>
+<li><p><code>TP.should_close_short&#40;strategy::AbstractStrategy&#41;</code></p>
+</li>
+<li><p><code>TP.load_strategy&#40;strategy::AbstractStrategy; kwargs...&#41;</code></p>
+</li>
+</ul><span class="marginnote">
+  <a target="_blank" href="https://github.com/g-gundam/ReversedSeries.jl">ReversedSeries.jl</a> is influenced by my experience with TradingView's PineScript language.
+  I believe viewing series data in reverse like PineScript does
+  makes it easier to write analysis functions, so I wanted to make that available in Julia.
+</span><h3 id="example_tradingpipelinehmastrategy">Example: TradingPipeline.HMAStrategy</h3>
+<pre><code class="language-julia">import TradingPipeline as TP
+using OnlineTechnicalIndicators # HMA
+using TechnicalIndicatorCharts  # Chart
+using ReversedSeries            # ReversedFrame, crossed_up, crossed_downmutable struct HMAStrategy &lt;: TP.AbstractStrategy
+    # You can put whatever state you want inside your strategies.
+    # For me, the bare minimum is the chart it&#39;s using for data,
+    # and a reversed view of its DataFrame.  If you&#39;re in to
+    # multi-timeframe analysis, feel free to use as many charts
+    # as you want.
+    chart::Chart
+    rf::ReversedFrame    function HMAStrategy&#40;chart&#41;
+        new&#40;chart, ReversedFrame&#40;chart.df&#41;&#41;
+    end
+endfunction TP.should_open_long&#40;strategy::HMAStrategy&#41;
+    # if we&#39;re neutral and
+    crossed_up&#40;strategy.rf.hma330, strategy.rf.hma440&#41;
+endfunction TP.should_close_long&#40;strategy::HMAStrategy&#41;
+    # if we&#39;re long and
+    crossed_down&#40;strategy.rf.hma330, strategy.rf.hma440&#41;
+end&quot;&quot;&quot;
+Initialize a long-only 330/440 HMA cross strategy.
+Return a chart_subject and strategy_subject.
+&quot;&quot;&quot;
+function TP.load_strategy&#40;::Type&#123;HMAStrategy&#125;; symbol&#61;&quot;BTCUSD&quot;, tf&#61;Hour&#40;4&#41;&#41;
+    hma_chart &#61; Chart&#40;
+        symbol, tf,
+        indicators &#61; &#91;
+            HMA&#123;Float64&#125;&#40;;period&#61;330&#41;,
+            HMA&#123;Float64&#125;&#40;;period&#61;440&#41;
+        &#93;,
+        visuals &#61; &#91;
+            Dict&#40;
+                :label_name &#61;&gt; &quot;HMA 330&quot;,
+                :line_color &#61;&gt; &quot;#26c6da&quot;,
+                :line_width &#61;&gt; 2
+            &#41;,
+            Dict&#40;
+                :label_name &#61;&gt; &quot;HMA 440&quot;,
+                :line_color &#61;&gt; &quot;#64b5f6&quot;,
+                :line_width &#61;&gt; 3
+            &#41;
+        &#93;
+    &#41;
+    all_charts &#61; Dict&#40;:trend &#61;&gt; hma_chart&#41;
+    chart_subject &#61; ChartSubject&#40;charts&#61;all_charts&#41;
+    strategy &#61; HMAStrategy&#40;hma_chart&#41;
+    strategy_subject &#61; StrategySubject&#40;;strategy&#41;
+    return &#40;chart_subject, strategy_subject&#41;
+end</code></pre>
+<h2 id="running_a_simulation">Running a Simulation</h2>
+<h3 id="the_setup_do_this_once">The Setup: Do This Once</h3>
+<pre><code class="language-julia"># load modules
+using CryptoMarketData
+using TechnicalIndicatorCharts
+using ReversedSeries
+import ExchangeOperations as XOusing UnPack
+using LightweightChartsimport TradingPipeline as TP
+import HierarchicalStateMachines as HSM
+using TradingPipeline
+using TradingPipeline: simulate, GoldenCrossStrategy, HMAStrategy, df_candles_observable
+using TradingPipeline: load_strategy, report# get data
+pancakeswap &#61; PancakeSwap&#40;&#41;
+btcusd1m &#61; load&#40;pancakeswap, &quot;BTCUSD&quot;; span&#61;Date&#40;&quot;2023-07-01&quot;&#41;:Date&#40;&quot;2024-11-29&quot;&#41;&#41;
+candle_observable &#61; df_candles_observable&#40;btcusd1m&#41;</code></pre>
+<h3 id="actually_running_the_simulation">Actually Running the Simulation</h3>
+<pre><code class="language-julia">@unpack simulator_session, chart_subject &#61; simulate&#40;candle_observable, HMAStrategy&#41;;
+rdf &#61; report&#40;simulator_session&#41;</code></pre><span class="marginnote">
+  In the REPL, I often use @unpack, but in a notebook, I find it more convenient to capture
+  named tuple in a variable like `r`.
+</span><p>You can rerun those last 2 lines as many times as you want.  Once all the setup before that is done, you don&#39;t have to repeat it.  Data loading is usually the slowest part of this process, but you don&#39;t have to do it often.  Once you have that <code>candle_observable</code>, you can keep reusing it over and over again.</p>
+<h3 id="visualizing_your_trades">Visualizing Your Trades</h3>
+<p>The <code>chart_subject</code> can often have multiple charts in it, but in this case we only have one. To visualize it together with the trades that were executed, do this:</p>
+<pre><code class="language-julia">chart &#61; chart_subject.charts&#91;:trend&#93;
+visualize&#40;&#40;chart, simulator_session&#41;; min_height&#61;800&#41;
+# Multiple dispatch is such a win.
+# Respect to whomever came up with this idea in the first place.</code></pre>
+<p><img src="https://g-gundam.github.io/assets/visualize-trades.png" alt="A Chart Annotated with Trades" /></p>
+<p>It doesn&#39;t matter what timeframe the charts are in.  Even if the chart you give it doesn&#39;t have the exact timestamp the trade entered and exited on, it&#39;ll try to get as close as the chart&#39;s timeframe allows and draw the lines accordingly.</p>
+<h2 id="my_simulation_pipeline">My Simulation Pipeline</h2>
+<p>This is how data flows while <code>simulate</code> is running.</p>
+<p><img src="https://g-gundam.github.io/assets/simulation-pipeline.png" alt="My Simulation Pipeline" /></p>
+<ul>
+<li><p><code>candle_observable</code> is currently backed by a DataFrame for backtesting.</p>
+</li>
+<li><p>If I wanted to do livetesting, it could be backed by a websocket.</p>
+</li>
+<li><p>If I wanted to do live trading, </p>
+<ul>
+<li><p><code>simulator_session_actor</code> goes away. </p>
+</li>
+<li><p><code>simulator_exchange_driver_subject</code> gets swapped out for a real exchange driver.</p>
+</li>
+<li><p><code>simulator_exchange_fill_subject</code> also gets swapped out for an exchange-specific implementation.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="chartsubject">ChartSubject</h3>
+<ul>
+<li><p>This consumes <code>Candle</code>s and incrementally builds as many charts in as many timeframes as you want.</p>
+</li>
+<li><p>I treat its contents like shared memory, but by gentleman&#39;s agreement, only <code>ChartSubject</code> is allowed to write to the charts.</p>
+</li>
+<li><p>Everyone else just reads, and so far, it&#39;s only the strategy that&#39;s looking.</p>
+</li>
+</ul>
+<h3 id="strategysubjects">StrategySubjects</h3>
+<ul>
+<li><p>This consumes data from two sources.</p>
+<ul>
+<li><p><code>Tuple&#123;Symbol, Candle&#125;</code> notifications from ChartSubject.</p>
+</li>
+<li><p><code>ExchangeFill</code> notifications from an ExchangeFillSubject.</p>
+</li>
+</ul>
+</li>
+<li><p>Its job is to manage the lifecycle of a trade using a Strategy.</p>
+</li>
+</ul>
+<p><img src="https://g-gundam.github.io/assets/market-order-strategy-state-machine.png" alt="the mighty hsm" /></p><span class="marginnote">
+I found an unpublished library called <a target="_blank" href="https://github.com/AndrewWasHere/HierarchicalStateMachines.jl">HierarchicalStateMachines.jl</a>, 
+and I asked the author to publish it because I wanted to use it, and he graciously agreed.
+Thank you, Andrew.
+</span><ul>
+<li><p>The state machine you see above is managing the lifecycle of a trade.</p>
+</li>
+<li><p>This was actually the simplest state machine I could make for this task.</p>
+<ul>
+<li><p>It assumes market orders will open and close positions with complete fills.</p>
+</li>
+<li><p>Stop orders are also assumed to completely close a position.</p>
+</li>
+</ul>
+</li>
+<li><p>More elaborate state machines may be created in the future if people want to do things like:</p>
+<ul>
+<li><p>Take partial profit during the lifetime of a trade</p>
+</li>
+<li><p>Use limit orders instead of market orders to open and close positions</p>
+</li>
+<li><p>Reverse a position with a large order that simultaneously closes the current position and opens a new one</p>
+</li>
+<li><p>Open a position with a stop order</p>
+</li>
+</ul>
+</li>
+<li><p>For now, though, let&#39;s keep it simple.</p>
+</li>
+</ul>
+<h3 id="exchangedriversubjects">ExchangeDriverSubjects</h3>
+<ul>
+<li><p>It consumes messages of type <code>TradeDecision.T</code> from the StrategySubject.</p>
+<ul>
+<li><p>The actual API calls to create orders that open or close a position comes from here.</p>
+</li>
+</ul>
+</li>
+<li><p>There is currently only one called <code>SimulatorExchangeDriverSubject</code>.</p>
+<ul>
+<li><p>It is really dumb.</p>
+</li>
+<li><p>It hard codes the position size to 1.</p>
+</li>
+</ul>
+</li>
+<li><p>Every supported exchange will have at least one driver.</p>
+<ul>
+<li><p>Some exchanges may have more than one driver.</p>
+</li>
+<li><p>For example, if you want to use limit orders instead of market orders, that would require a different driver even though you&#39;re using the same exchange.</p>
+</li>
+</ul>
+</li>
+<li><p>I&#39;m thinking of putting a lot of responsiblities here or in adjacent Rocket subjects that have yet to be written.</p>
+<ul>
+<li><p>Position sizing decisions will probably happen here.</p>
+</li>
+<li><p>Stop loss management may be adjacent to this.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="exchangefillsubjects">ExchangeFillSubjects</h3>
+<ul>
+<li><p>This consumes exchange-specific fill messages and translates them to more generic fill messages before sending them back to the StrategySubject.</p>
+</li>
+<li><p>There is currently only one called <code>SimulatorExchangeFillSubject</code>.</p>
+</li>
+<li><p>Every time you try to open or close a position, you want to make sure you get an acknowledgment from the exchange that it went through before moving on.</p>
+</li>
+<li><p>That&#39;s why the state machine from the StrategySubject makes a distinction between wanting to be long versus actually being long.</p>
+</li>
+<li><p>Also, stop losses are often hit at unpredictable times, so this will let the StrategySubject know when that happens so that it can change its state appropriately.</p>
+</li>
+</ul>
+<h2 id="i_have_a_lot_more_work_to_do">I have a lot more work to do.</h2>
+<ul>
+<li><p>As I got further down the document, the code I described became less and less mature.</p>
+</li>
+<li><p>The biggest reason for that is that it&#39;s newly explored territory for me.</p>
+</li>
+<li><p>Until I started using Rocket.jl, I couldn&#39;t really explore this area, so I&#39;m just now starting to put serious thought into how this part of the pipeline should work.</p>
+</li>
+</ul><span class="marginnote">
+  Also, special thanks to those who helped me with the JavaScript incarnation of this work years ago.
+  Some of this might look familiar.
+</span><p>If you&#39;ve made it this far, thanks. It&#39;s a lot to read, but I tried to make it as easy to take in as I could.</p>
+ ]]>
+  </content:encoded>
+    
+  <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name><a href="https://github.com/g-gundam">@g-gundam</a></atom:name>
+  </atom:author>
+        
+</item>
+</channel></rss>
