@@ -19,7 +19,7 @@ ignore = ["node_modules/"]
 # RSS (the website_{title, descr, url} must be defined to get RSS)
 generate_rss = true
 website_title = "g-gundam.github.io"
-website_descr = "Exploring Automated Trading with Julia"
+website_descr = "Exploring Algorithmic Trading with Julia"
 website_url   = "https://g-gundam.github.io/"
 rss_full_content = true
 +++
