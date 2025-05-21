@@ -7,10 +7,3 @@
 - Which timeline am I activating?
   + Apparently I'm a Common Lisp Programmer now.
   + Now that I've gotten my feet wet with it, I can see it's really capable and underappreciated.
-
-# Desires
-
-- I want to write about other things too.
-  + Emacs and Elisp
-  + Perl
-  + Maybe some Common Lisp
