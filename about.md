@@ -10,3 +10,4 @@
   + I'm helping someone who needs it and deserves it.
   + I'm a little frustrated by the mess though.
   + How do I navigate this?
+  + getting going
