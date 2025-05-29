@@ -7,3 +7,4 @@
 - Which timeline am I activating?
   + Employment came and went in just 2 weeks.
   + It was too good to be true.
+  + The grind continues.
