@@ -9,3 +9,4 @@
   + It was too good to be true.
   + The grind continues.
   + At least the T14 arrived safely today.
+- Just a little more Common Lisp, and then I'll be back to Julia.
