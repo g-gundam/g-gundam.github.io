@@ -7,4 +7,5 @@
 - Which timeline am I activating?
   + Looking for things to do.
   + I don't know what to do next here.
+  + Why am I stuck here?
 - It's been a while since I've looked at chartserver.jl.
