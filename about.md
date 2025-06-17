@@ -7,4 +7,6 @@
 - Which timeline am I activating?
   + It looks like I'm doing some websockets work in Common Lisp.
   + A proper hunchensocket example should exist.
+  + It exists, and I'm happy with how it turned out.
+  + I learned a lot about htmx too.
 - It's been a while since I've looked at chartserver.jl.
