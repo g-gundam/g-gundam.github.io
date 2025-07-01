@@ -6,4 +6,5 @@
 - I had intended it to be a throwaway account, but it has since taken on a life of its own.
 - Which timeline am I activating?
   + I'm enjoying and appreciating Julia again.
+  + argh
 - It's been a while since I've looked at chartserver.jl.
