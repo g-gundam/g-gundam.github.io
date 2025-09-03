@@ -13,4 +13,5 @@
 
 # Emacs Lisp
 
-- rmoo.el (TODO)
+- rmoo.el :: (TODO) This is a minor fork of rmoo.el that works on Emacs 30+. (It probably works on 28+, but I haven't checked.)
+- ctsf.el :: (TODO) This is my wrapper around custom-theme-set-faces.
