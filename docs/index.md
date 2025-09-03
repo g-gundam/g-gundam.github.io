@@ -10,3 +10,7 @@
 
 - [lparallel](https://g-gundam.github.io/lparallel/)
     + [Setup repository to publish docs to GitHub Pages](https://github.com/sharplispers/lparallel/pull/14) sharplispers/lparallel#14 
+
+# Emacs Lisp
+
+- rmoo.el (TODO)
