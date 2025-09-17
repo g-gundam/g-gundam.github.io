@@ -1,9 +1,9 @@
 # Julia
 
 - [CryptoMarketData.jl](https://g-gundam.github.io/CryptoMarketData.jl/dev/)
-- [TechnicalIndicatorCharts.jl](https://g-gundam.github.io/TechnicalIndicatorCharts.jl)
-- [ReversedSeries.jl](https://g-gundam.github.io/ReversedSeries.jl)
-- [ExchangeOperations.jl](https://g-gundam.github.io/ExchangeOperations.jl)
+- [TechnicalIndicatorCharts.jl](https://g-gundam.github.io/TechnicalIndicatorCharts.jl/dev/)
+- [ReversedSeries.jl](https://g-gundam.github.io/ReversedSeries.jl/dev/)
+- [ExchangeOperations.jl](https://g-gundam.github.io/ExchangeOperations.j/dev/l)
 - [TradingPipeline.jl](https://g-gundam.github.io/TradingPipeline.jl/dev/)
 
 # Common Lisp
