@@ -1,6 +1,6 @@
 # Julia
 
-- [CryptoMarketData.jl](https://g-gundam.github.io/CryptoMarketData.jl)
+- [CryptoMarketData.jl](https://g-gundam.github.io/CryptoMarketData.jl/dev/)
 - [TechnicalIndicatorCharts.jl](https://g-gundam.github.io/TechnicalIndicatorCharts.jl)
 - [ReversedSeries.jl](https://g-gundam.github.io/ReversedSeries.jl)
 - [ExchangeOperations.jl](https://g-gundam.github.io/ExchangeOperations.jl)
