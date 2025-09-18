@@ -1,5 +1,6 @@
 * g-gundam.github.io
 ** Influences
+
 - https://tony-zorman.com/ // https://github.com/slotThe/slotThe.github.io
   + I like his take on Tufte.
   + I eventually want to have a cool table of contents like him.
@@ -7,8 +8,28 @@
 - https://github.com/catppuccin/emacs
   + I was using =M-x describe-face= in Emacs to pick out colors for the blog.
   + My site theme is a port of catppuccin-mocha.
+
+** Workflow
+
+- For local development, go into the root directory for this project and run the following.
+
+#+begin_src shell
+# @franklin is an environment that includes Franklin.jl as a dependency.
+julia --project=@franklin
+#+end_src
+
+#+begin_src julia-repl
+julia> using Franklin
+
+julia> serve()
+#+end_src
+
+- It should open http://localhost:8000/ in your browser.
+- See the [[https://franklinjl.org/][docs]] for more details.
+
 * Log
 ** <2024-12-27 Fri> A new site is born.
+
 - I needed a place to publish a static export of a notebook.
 - I had also wanted to setup a technical blog for a while.
 - I almost used [[https://github.com/loikein/hugo-tufte][hugo-tufte]] for this, but the latest version of Hugo deprecated a bunch of features it was using, and I don't know Hugo well enough to port it.
