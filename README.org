@@ -14,8 +14,7 @@
 - For local development, go into the root directory for this project and run the following.
 
 #+begin_src shell
-# @franklin is an environment that includes Franklin.jl as a dependency.
-julia --project=@franklin
+julia --project
 #+end_src
 
 #+begin_src julia-repl
