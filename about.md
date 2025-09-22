@@ -6,3 +6,4 @@
 - I had intended it to be a throwaway account, but it has since taken on a life of its own.
 - Currently revisiting my Julia libraries.
 - I also want to start blogging about Emacs.
+  + How should I start?
