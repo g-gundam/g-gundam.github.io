@@ -5,6 +5,7 @@
 ## 2025
 
 - [Stop Loss Policies in TradingPipeline.jl](#not-yet) (to be written)
+- [Paredit: Fixing Unbalanced Parentheses](/posts/paredit-fixing-unbalanced-parentheses/)
 
 ## 2024
 
