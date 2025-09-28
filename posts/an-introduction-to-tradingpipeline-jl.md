@@ -1,6 +1,7 @@
 @def title = "Introduction to TradingPipeline.jl"
 @def tags = ["trading", "julia"]
 @def rss = "Provide an overview of how backtesting works in TradingPipeline.jl."
+@def rss_pub_date = Date(2024, 12, 27)
 
 # An Introduction to TradingPipeline.jl
 
