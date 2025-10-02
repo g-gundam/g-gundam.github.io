@@ -1,7 +1,7 @@
 @def title = "Paredit: Fixing Unbalanced Parentheses"
 @def tags = ["emacs"]
 @def rss = "Talk about how to recover when you're using paredit, and your parentheses become unbalanced."
-@def rss_pub_date = Date(2025, 9, 27)
+@def rss_pubdate = Date(2025, 9, 27)
 
 # Paredit: Fixing Unbalanced Parentheses
 
