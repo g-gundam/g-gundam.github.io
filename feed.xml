@@ -23,6 +23,47 @@
 
 <item>
   <title>
+    <![CDATA[  Paredit: Fixing Unbalanced Parentheses  ]]>
+  </title>
+  <link> https://g-gundam.github.io/posts/paredit-fixing-unbalanced-parentheses/index.html </link>
+  <guid> https://g-gundam.github.io/posts/paredit-fixing-unbalanced-parentheses/index.html </guid>
+  <description>
+    <![CDATA[  Talk about how to recover when you&#39;re using paredit, and your parentheses become unbalanced.  ]]>
+  </description>  
+  
+  <content:encoded>
+    <![CDATA[  <h1 id="paredit_fixing_unbalanced_parentheses">Paredit: Fixing Unbalanced Parentheses</h1>
+<p>2025-09-27</p>
+<p>A very important Emacs skill that not enough people talk about is how to fix your code when you&#39;re using paredit and your parentheses become unbalanced.  I remember when I first started using paredit, this was a problem I&#39;d run into occasionally, and I did not know how to fix it.  Instead of dealing with a malfunctioning paredit, I decided to not use paredit for a long time which was a shame, because structural editing in Lisp is great.  Here are a few techniques I&#39;ve come up with to recover from this unbalanced state so that you can continue to use paredit happily.</p>
+<h2 id="temporarily_disable_paredit">Temporarily Disable paredit</h2>
+<ul>
+<li><p>Hit <code>M-x paredit</code> to temporarily disable paredit.</p>
+</li>
+<li><p>Find where the missing parenthesis belongs and insert it.</p>
+</li>
+<li><p>Using <code>M-x check-parens</code> can be helpful in this situation.</p>
+</li>
+<li><p>Hit <code>M-x paredit</code> to reenable paredit.</p>
+</li>
+</ul>
+<h2 id="evil_users_use_c-v_in_insert_mode">Evil Users, use <code>C-v</code> in insert mode.</h2>
+<p>If you&#39;re an evil user, you don&#39;t have to temporarily disable paredit.  Just find where the missing parenthesis needs to go and hit <code>C-v &#41;</code> while in insert mode to force insertion of the &quot;&#41;&quot; character.</p>
+<h2 id="balance_restored">Balance Restored</h2>
+<p>Once all the parentheses are balanced, paredit should resume functioning properly again.</p>
+ ]]>
+  </content:encoded>
+    
+  <pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name><a href="https://github.com/g-gundam">@g-gundam</a></atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
     <![CDATA[  Introduction to TradingPipeline.jl  ]]>
   </title>
   <link> https://g-gundam.github.io/posts/an-introduction-to-tradingpipeline-jl/index.html </link>
@@ -300,48 +341,7 @@ Thank you, Andrew.
  ]]>
   </content:encoded>
     
-  <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>  
-  
-  
-  <atom:author>
-    <atom:name><a href="https://github.com/g-gundam">@g-gundam</a></atom:name>
-  </atom:author>
-        
-</item>
-
-<item>
-  <title>
-    <![CDATA[  Paredit: Fixing Unbalanced Parentheses  ]]>
-  </title>
-  <link> https://g-gundam.github.io/posts/paredit-fixing-unbalanced-parentheses/index.html </link>
-  <guid> https://g-gundam.github.io/posts/paredit-fixing-unbalanced-parentheses/index.html </guid>
-  <description>
-    <![CDATA[  Talk about how to recover when you&#39;re using paredit, and your parentheses become unbalanced.  ]]>
-  </description>  
-  
-  <content:encoded>
-    <![CDATA[  <h1 id="paredit_fixing_unbalanced_parentheses">Paredit: Fixing Unbalanced Parentheses</h1>
-<p>2025-09-27</p>
-<p>A very important Emacs skill that not enough people talk about is how to fix your code when you&#39;re using paredit and your parentheses become unbalanced.  I remember when I first started using paredit, this was a problem I&#39;d run into occasionally, and I did not know how to fix it.  Instead of dealing with a malfunctioning paredit, I decided to not use paredit for a long time which was a shame, because structural editing in Lisp is great.  Here are a few techniques I&#39;ve come up with to recover from this unbalanced state so that you can continue to use paredit happily.</p>
-<h2 id="temporarily_disable_paredit">Temporarily Disable paredit</h2>
-<ul>
-<li><p>Hit <code>M-x paredit</code> to temporarily disable paredit.</p>
-</li>
-<li><p>Find where the missing parenthesis belongs and insert it.</p>
-</li>
-<li><p>Using <code>M-x check-parens</code> can be helpful in this situation.</p>
-</li>
-<li><p>Hit <code>M-x paredit</code> to reenable paredit.</p>
-</li>
-</ul>
-<h2 id="evil_users_use_c-v_in_insert_mode">Evil Users, use <code>C-v</code> in insert mode.</h2>
-<p>If you&#39;re an evil user, you don&#39;t have to temporarily disable paredit.  Just find where the missing parenthesis needs to go and hit <code>C-v &#41;</code> while in insert mode to force insertion of the &quot;&#41;&quot; character.</p>
-<h2 id="balance_restored">Balance Restored</h2>
-<p>Once all the parentheses are balanced, paredit should resume functioning properly again.</p>
- ]]>
-  </content:encoded>
-    
-  <pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate>  
+  <pubDate>Fri, 27 Dec 2024 00:00:00 +0000</pubDate>  
   
   
   <atom:author>
