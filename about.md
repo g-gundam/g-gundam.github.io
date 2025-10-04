@@ -8,5 +8,3 @@
 - I also want to start blogging about Emacs.
   + How should I start?
   + Maybe I could start with how to deal with unbalanced parentheses in paredit.
-
-## happy birthday to my little bro
