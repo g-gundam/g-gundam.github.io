@@ -27,6 +27,7 @@ julia> serve()
 - See the [[https://franklinjl.org/][docs]] for more details.
 
 * Log
+** stay healthy 
 ** <2024-12-27 Fri> A new site is born.
 
 - I needed a place to publish a static export of a notebook.
