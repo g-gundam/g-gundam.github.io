@@ -90,8 +90,21 @@
   &#41;</code></pre>
 <p>The trade-off is that some traditional evil movement commands had to be unbound, but I think it&#39;s a sacrifice worth making in a Lisp editing context.  After all, you&#39;re working with &#40;sexps&#41; not sentences and paragraphs.</p>
 <p>I would like evil users to try this out, and see how it feels.  I think you&#39;ll find it very intuitive and compatible with vi-style movement.  It should make lisp programming a little more enjoyable too.</p>
-<p>Happy Lisp Hacking</p>
- ]]>
+<p>Happy Lisp Hacking</p><script src="https://giscus.app/client.js"
+        data-repo="g-gundam/g-gundam.github.io"
+        data-repo-id="R_kgDONjA3jw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDONjA3j84CzOYG"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="catppuccin_macchiato"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script> ]]>
   </content:encoded>
     
   <pubDate>Sun, 30 Nov 2025 00:00:00 +0000</pubDate>  
