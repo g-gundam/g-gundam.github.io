@@ -90,3 +90,20 @@ I would like evil users to try this out, and see how it feels.  I think you'll f
 
 Happy Lisp Hacking
 
+~~~
+<script src="https://giscus.app/client.js"
+        data-repo="g-gundam/g-gundam.github.io"
+        data-repo-id="R_kgDONjA3jw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDONjA3j84CzOYG"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="catppuccin_macchiato"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+~~~
