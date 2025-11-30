@@ -34,11 +34,22 @@
   <content:encoded>
     <![CDATA[  <h1 id="paredit_and_evil_improving_navigation">Paredit and Evil: Improving Navigation</h1>
 <p>2025-11-30</p>
+<h2 id="if">If...</h2>
+<ul>
+<li><p>...you are an <a href="https://www.gnu.org/software/emacs/">Emacs</a> user</p>
+</li>
+<li><p>who also uses <a href="https://github.com/noctuid/evil-guide">evil</a> </p>
+</li>
+<li><p>and is having a hard time getting <a href="https://paredit.org/">paredit</a>  navigation to work,</p>
+</li>
+<li><p><em><strong>this post is for you</strong></em>.</p>
+</li>
+</ul>
 <h2 id="the_most_important_setting">The Most Important Setting</h2>
-<p>If you&#39;re an evil user who is having trouble getting paredit&#39;s navigation commands to work, make sure <code>evil-move-beyond-eol</code> is <code>t</code>.</p>
+<p>First make sure <code>evil-move-beyond-eol</code> is true.</p>
 <pre><code class="language-lisp">;; Many paredit navigation commands won&#39;t work without this&#33;
 &#40;setq evil-move-beyond-eol t&#41;</code></pre>
-<p>Without this setting, many paredit navigation commands just don&#39;t work.  Unfortunately, it is a departure from traditional vi/vim behavior that some of you may not like.  To limit this behavior to only when you&#39;re using paredit-mode, you could do something like this.</p>
+<p>Unfortunately, it is a departure from traditional vi/vim behavior that some of you may not like.  To limit this behavior to only when you&#39;re using paredit-mode, you could do something like this.</p>
 <pre><code class="language-lisp">&#40;defun enable-evil-move-beyond-eol &#40;&#41;
   &quot;Enable &#96;evil-move-beyond-eol&#39; in a buffer-local way.&quot;
   &#40;setq-local evil-move-beyond-eol t&#41;&#41;
@@ -46,6 +57,7 @@
 ;; My preference is to used named functions in hooks,
 ;; because it makes removal easier.
 &#40;add-hook &#39;paredit-mode-hook #&#39;enable-evil-move-beyond-eol&#41;</code></pre>
+<p>I personally don&#39;t mind and do it the first way, but you have options.</p>
 <h2 id="improving_navigation_keybindings">Improving Navigation Keybindings</h2>
 <p>Paredit provides the following navigation commands.</p>
 <table><tr><th align="right">command</th><th align="right">key</th><th align="right">key</th><th align="right">command</th></tr><tr><td align="right">paredit-forward</td><td align="right">C-M-f</td><td align="right">C-M-b</td><td align="right">paredit-backward</td></tr><tr><td align="right">paredit-forward-up</td><td align="right">C-M-n</td><td align="right">C-M-p</td><td align="right">paredit-backward-down</td></tr><tr><td align="right">paredit-forward-down</td><td align="right">C-M-d</td><td align="right">C-M-u</td><td align="right">paredit-backward-up</td></tr></table>
@@ -56,8 +68,19 @@
 <li><p>up and down.</p>
 </li>
 </ul>
-<p>For the commands that move in two dimensions, the mnemonics used by the existing keybindings struggle to capture both dimensions at once.  However, vi-style editing has a long tradtion of using <code>&#40;&#91;&#123;&#125;&#93;&#41;</code> for forwarnd and backward movement, so forward and backward directionality is already solved.  The only thing left to solve is encoding up and down.  My intuition was that downard movement into a sexp would be more common than upward movement out of a sexp so I opted to give downward movement to <code>&#91;&#93;</code> and upward movment to <code>&#123;&#125;</code>.  This is the end result.</p>
-<pre><code class="language-lisp">&#40;evil-define-key &#39;&#40;normal visual&#41; paredit-mode-map
+<p>For the commands that move in two dimensions, the mnemonics used by the existing keybindings struggle to capture both dimensions at once.  However, vi-style editing has a long tradtion of using <code>&#40;&#91;&#123;&#125;&#93;&#41;</code> for forward and backward movement, so forward and backward directionality is already solved.  The only thing left to solve is encoding up and down.</p>
+<ul>
+<li><p><code>&#91;&#93;</code> will be used for downard movement, because I think it&#39;s more common to move down into a sexp.</p>
+</li>
+<li><p><code>&#123;&#125;</code> will be used for upward movement.  This requires the SHIFT key.</p>
+</li>
+</ul>
+<table><tr><th align="right">command</th><th align="right">key</th><th align="right">key</th><th align="right">command</th></tr><tr><td align="right">paredit-forward</td><td align="right">&#40;</td><td align="right">&#41;</td><td align="right">paredit-backward</td></tr><tr><td align="right">paredit-forward-up</td><td align="right">&#91;</td><td align="right">&#93;</td><td align="right">paredit-backward-down</td></tr><tr><td align="right">paredit-forward-down</td><td align="right">&#123;</td><td align="right">&#125;</td><td align="right">paredit-backward-up</td></tr></table><span class="marginnote">
+<a href="https://github.com/meow-edit/meow">Meow</a> users could try something similar and gain similar benefits.
+</span><pre><code class="language-lisp">;; Integrate paredit navigation commands in a vi style.
+&#40;evil-define-key &#39;&#40;normal visual&#41; paredit-mode-map
+  ;;  paredit function                    overriden evil function
+  ;;  ----------------                    -----------------------
   &quot;&#41;&quot; #&#39;paredit-forward                 ; evil-forward-sentence-begin
   &quot;&#40;&quot; #&#39;paredit-backward                ; evil-backward-sentence-begin
   &quot;&#93;&quot; #&#39;paredit-forward-down            ; evil-forward-section-begin
@@ -65,8 +88,9 @@
   &quot;&#125;&quot; #&#39;paredit-forward-up              ; evil-forward-paragraph
   &quot;&#123;&quot; #&#39;paredit-backward-up             ; evil-backward-paragraph
   &#41;</code></pre>
-<table><tr><th align="right">command</th><th align="right">key</th><th align="right">key</th><th align="right">command</th></tr><tr><td align="right">paredit-forward</td><td align="right">&#40;</td><td align="right">&#41;</td><td align="right">paredit-backward</td></tr><tr><td align="right">paredit-forward-up</td><td align="right">&#91;</td><td align="right">&#93;</td><td align="right">paredit-backward-down</td></tr><tr><td align="right">paredit-forward-down</td><td align="right">&#123;</td><td align="right">&#125;</td><td align="right">paredit-backward-up</td></tr></table>
-<p>The trade-off is that some traditional evil movement commands had to be unbound, but I think it&#39;s a sacrifice worth making in a Lisp editing context.  You&#39;re working with sexps not sentences and paragraphs.</p>
+<p>The trade-off is that some traditional evil movement commands had to be unbound, but I think it&#39;s a sacrifice worth making in a Lisp editing context.  After all, you&#39;re working with &#40;sexps&#41; not sentences and paragraphs.</p>
+<p>I would like evil users to try this out, and see how it feels.  I think you&#39;ll find it very intuitive and compatible with vi-style movement.  It should make lisp programming a little more enjoyable too.</p>
+<p>Happy Lisp Hacking</p>
  ]]>
   </content:encoded>
     
