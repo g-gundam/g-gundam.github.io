@@ -58,7 +58,7 @@
 <h3 id="m-x_info-nav">M-x info-nav</h3>
 <p>If you don&#39;t want to bind a key, you can just run it via <code>M-x info-nav</code>.</p>
 <h2 id="a_special_message_for_unix_philosophers">A Special Message for Unix Philosophers</h2><span class="marginnote">
-I really want to see Emacs used more as a platform for delivering Elisp applications.  With the addition of <a href="https://emacsredux.com/blog/2024/02/23/changing-the-emacs-configuration-directory/" target="_blank">--init-directory</a> in Emacs 29, this has become easier than ever.
+I really want to see Emacs used more as a platform for delivering Elisp applications to people who don't normally use Emacs.  With the addition of <a href="https://emacsredux.com/blog/2024/02/23/changing-the-emacs-configuration-directory/" target="_blank">--init-directory</a> in Emacs 29, this has become easier than ever.
 </span><ul>
 <li><p>What if you love the command line and don&#39;t use Emacs, but you still want to read info documents?</p>
 </li>
