@@ -33,6 +33,7 @@
   
   <content:encoded>
     <![CDATA[  <h1 id="info-nav_an_ergonomic_info_reading_experience">info-nav: An Ergonomic Info Reading Experience</h1>
+<p>2026-03-04</p>
 <p>A few months ago, I released <a href="https://codeberg.org/ggxx/info-nav">info-nav</a> on MELPA.  It&#39;s a small package that remixes existing functionality in a novel way to make info documents easier to read in Emacs.</p>
 <h2 id="the_idea_is_simple">The Idea is Simple</h2>
 <p>When viewing an info document:</p>
