@@ -360,9 +360,9 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
 
 @media (max-width: 760px) {
   body {
-    width: 84%;
-    padding-left: 8%;
-    padding-right: 8%;
+    width: 96%;
+    padding-left: 1%;
+    padding-right: 1%;
   }
 
   hr,
