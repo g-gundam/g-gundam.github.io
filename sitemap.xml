@@ -32,6 +32,12 @@
     <priority>0.5</priority>
 </url>
 <url>
+    <loc>https://g-gundam.github.io/posts/info-nav-ergonomic-reading/index.html</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://g-gundam.github.io/posts/paredit-fixing-unbalanced-parentheses/index.html</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>monthly</changefreq>

@@ -23,6 +23,80 @@
 
 <item>
   <title>
+    <![CDATA[  <code>info-nav</code>: An Ergonomic Info Reading Experience  ]]>
+  </title>
+  <link> https://g-gundam.github.io/posts/info-nav-ergonomic-reading/index.html </link>
+  <guid> https://g-gundam.github.io/posts/info-nav-ergonomic-reading/index.html </guid>
+  <description>
+    <![CDATA[  Present my attempt making info documents easier to read.  ]]>
+  </description>  
+  
+  <content:encoded>
+    <![CDATA[  <h1 id="info-nav_an_ergonomic_info_reading_experience">info-nav: An Ergonomic Info Reading Experience</h1>
+<p>A few months ago, I released <a href="https://codeberg.org/ggxx/info-nav">info-nav</a> on MELPA.  It&#39;s a small package that remixes existing functionality in a novel way to make info documents easier to read in Emacs.</p>
+<h2 id="the_idea_is_simple">The Idea is Simple</h2>
+<p>When viewing an info document:</p>
+<ol>
+<li><p>display the table of contents on the left;</p>
+</li>
+<li><p>display the actual contents on the right.</p>
+</li>
+<li><p>Make actions in the table of contents window drive navigation on the contents window.</p>
+</li>
+</ol>
+<h2 id="screencast">Screencast</h2><div>
+<video width="100%" id="video05923777870110751" poster="https://world2ch.net/imgboard/thumb/1771949009300s.jpg" src="https://world2ch.net/imgboard/src/1771949009300.webm" autoplay="" controls="" loop="" class="iichan-video-player"></video>
+</div><p>The end result is that you don&#39;t need to know any keybindings to navigate an info document.  Navigation can be 100&#37; mouse driven &#40;even in the terminal&#41;.</p>
+<h2 id="installation">Installation</h2>
+<pre><code class="language-lisp">&#40;use-package info-nav
+  :ensure t
+  :bind &#40;&#40;&quot;C-h 3&quot; . info-nav&#41;&#41;&#41;</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="c-h_3">C-h 3</h3>
+<p>The recommended binding is <code>C-h 3</code>.  The reason I chose this was because it reminds me of how <code>C-x 3</code> splits a window in half.  It&#39;s also likely to be free and unbound.</p>
+<h3 id="m-x_info-nav">M-x info-nav</h3>
+<p>If you don&#39;t want to bind a key, you can just run it via <code>M-x info-nav</code>.</p>
+<h2 id="a_special_message_for_unix_philosophers">A Special Message for Unix Philosophers</h2><span class="marginnote">
+I really want to see Emacs used more as a platform for delivering Elisp applications.  With the addition of <a href="https://emacsredux.com/blog/2024/02/23/changing-the-emacs-configuration-directory/" target="_blank">--init-directory</a> in Emacs 29, this has become easier than ever.
+</span><ul>
+<li><p>What if you love the command line and don&#39;t use Emacs, but you still want to read info documents?</p>
+</li>
+<li><p>Check out <a href="https://codeberg.org/ggxx/nfo">nfo</a>.</p>
+<ul>
+<li><p>It is a CLI tool that uses Emacs as a user-friendly replacement for the terminal <code>info</code> program.</p>
+</li>
+<li><p>I made for people who don&#39;t even like Emacs but want to read some docs.</p>
+</li>
+</ul>
+</li>
+</ul><script src="https://giscus.app/client.js"
+        data-repo="g-gundam/g-gundam.github.io"
+        data-repo-id="R_kgDONjA3jw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDONjA3j84CzOYG"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="catppuccin_macchiato"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script> ]]>
+  </content:encoded>
+    
+  <pubDate>Wed, 04 Mar 2026 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name><a href="https://github.com/g-gundam">@g-gundam</a></atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
     <![CDATA[  Paredit and Evil: Improving Navigation  ]]>
   </title>
   <link> https://g-gundam.github.io/posts/paredit-and-evil-improving-navigation/index.html </link>
