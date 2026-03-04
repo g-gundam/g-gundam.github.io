@@ -7,12 +7,14 @@
 
 2025-11-30
 
-## If...
+## Who Is This For?
 
-- ...you are an [Emacs](https://www.gnu.org/software/emacs/) user
-- who also uses [evil](https://github.com/noctuid/evil-guide) 
-- and is having a hard time getting [paredit](https://paredit.org/)  navigation to work,
+- If you are an [Emacs](https://www.gnu.org/software/emacs/) user
+- ...who also uses [evil](https://github.com/noctuid/evil-guide) 
+- ...and is having a hard time getting [paredit](https://paredit.org/)  navigation to work,
 - _**this post is for you**_.
+
+I will show you how evil and paredit can work well together with no extra packages needed.
 
 ## The Most Important Setting
 
@@ -23,7 +25,7 @@ First make sure `evil-move-beyond-eol` is true.
 (setq evil-move-beyond-eol t)
 ```
 
-Unfortunately, it is a departure from traditional vi/vim behavior that some of you may not like.  To limit this behavior to only when you're using paredit-mode, you could do something like this.
+Unfortunately, it is a minor departure from traditional vi/vim behavior that some of you may not like.  To limit this behavior to only when you're using paredit-mode, you could do something like this.
 
 ```lisp
 (defun enable-evil-move-beyond-eol ()
@@ -41,28 +43,26 @@ I personally don't mind and do it the first way, but you have options.
 
 Paredit provides the following navigation commands.
 
-| command              | key   | key   | command               |
-|----------------------|-------|-------|-----------------------|
-| paredit-forward      | C-M-f | C-M-b | paredit-backward      |
-| paredit-forward-up   | C-M-n | C-M-p | paredit-backward-down |
-| paredit-forward-down | C-M-d | C-M-u | paredit-backward-up   |
+| command               | key   | key   | command              |
+|-----------------------|-------|-------|----------------------|
+| paredit-backward      | C-M-b | C-M-f | paredit-forward      |
+| paredit-backward-down | C-M-p | C-M-d | paredit-forward-down |
+| paredit-backward-up   | C-M-u | C-M-n | paredit-forward-up   |
 
 There are two dimensions of movement here:
 - forward and backward and 
 - up and down.
 
-
-
 For the commands that move in two dimensions, the mnemonics used by the existing keybindings struggle to capture both dimensions at once.  However, vi-style editing has a long tradtion of using `([{}])` for forward and backward movement, so forward and backward directionality is already solved.  The only thing left to solve is encoding up and down.
 
-- `[]` will be used for downard movement, because I think it's more common to move down into a sexp.
+- `[]` will be used for downard movement, because I think it's slightly more common to move down into a sexp.
 - `{}` will be used for upward movement.  This requires the SHIFT key.
 
-| command              | key | key | command               |
-|----------------------|-----|-----|-----------------------|
-| paredit-forward      | (   | )   | paredit-backward      |
-| paredit-forward-up   | [   | ]   | paredit-backward-down |
-| paredit-forward-down | {   | }   | paredit-backward-up   |
+| command               | key | key | command              |
+|-----------------------|-----|-----|----------------------|
+| paredit-backward      | (   | )   | paredit-forward      |
+| paredit-backword-down | [   | ]   | paredit-forward-down |
+| paredit-backward-up   | {   | }   | paredit-forward-up   |
 
 ~~~
 <span class="marginnote">
@@ -89,6 +89,10 @@ The trade-off is that some traditional evil movement commands had to be unbound,
 I would like evil users to try this out, and see how it feels.  I think you'll find it very intuitive and compatible with vi-style movement.  It should make lisp programming a little more enjoyable too.
 
 Happy Lisp Hacking
+
+## See Also
+
+1. [r/emacs - Lisp editing packages - opinions?](https://www.reddit.com/r/emacs/comments/1r23183/comment/o4vmbpu/)
 
 ~~~
 <script src="https://giscus.app/client.js"
