@@ -52,7 +52,7 @@ If you don't want to bind a key, you can just run it via `M-x info-nav`.
 
 ~~~
 <span class="marginnote">
-I really want to see Emacs used more as a platform for delivering Elisp applications.  With the addition of <a href="https://emacsredux.com/blog/2024/02/23/changing-the-emacs-configuration-directory/" target="_blank">--init-directory</a> in Emacs 29, this has become easier than ever.
+I really want to see Emacs used more as a platform for delivering Elisp applications to people who don't normally use Emacs.  With the addition of <a href="https://emacsredux.com/blog/2024/02/23/changing-the-emacs-configuration-directory/" target="_blank">--init-directory</a> in Emacs 29, this has become easier than ever.
 </span>
 ~~~
 
