@@ -5,6 +5,8 @@
 
 # info-nav: An Ergonomic Info Reading Experience
 
+2026-03-04
+
 A few months ago, I released [info-nav](https://codeberg.org/ggxx/info-nav)
 on MELPA.  It's a small package that remixes existing functionality in a
 novel way to make info documents easier to read in Emacs.
