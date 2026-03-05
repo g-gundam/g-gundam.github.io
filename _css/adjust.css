@@ -1,5 +1,20 @@
 /* adjustments for Franklin */
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 99vh;
+}
+
+#layout {
+  flex: 1;
+}
+
+footer {
+  margin-top: 2em;
+  margin-left: 186px;
+}
+
 .franklin-content code {
   font-size: var(--small);
 }
@@ -74,6 +89,11 @@
   #main {
     float: none;
     width: 100%;
+  }
+
+  footer {
+    margin-top: 2em;
+    margin-left: 70px;
   }
 }
 

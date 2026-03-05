@@ -1,6 +1,11 @@
 <!-- CONTENT ENDS HERE -->
         </div> <!-- end of id=main -->
     </div> <!-- end of id=layout -->
+    <footer>
+      <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}<br/>
+      Last modified: {{ fill fd_mtime }}.{{end}}<br/>
+      Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org/">Julia programming language</a>.
+    </footer>
     {{ if hasmath }}
         {{ insert foot_katex.html }}
     {{ end }}
