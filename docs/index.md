@@ -9,8 +9,22 @@
 
 # Common Lisp
 
+~~~
+<span class="marginnote">
+lparallel is not my library, but I did a lot of the setup for salvaging its documentation.
+</span>
+~~~
+
 - [lparallel](https://g-gundam.github.io/lparallel/)
     + [Setup repository to publish docs to GitHub Pages](https://github.com/sharplispers/lparallel/pull/14) sharplispers/lparallel#14 
+    
+~~~
+<span class="marginnote">
+scraper is so small, I hesitate to even call it a library.  However, it is the foundation
+of most of my CL scraping code.
+</span>
+~~~
+
 - [scraper](https://codeberg.org/ggxx/scraper)
 
 # Emacs Lisp
