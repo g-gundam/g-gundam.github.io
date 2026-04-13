@@ -11,6 +11,7 @@
 
 - [lparallel](https://g-gundam.github.io/lparallel/)
     + [Setup repository to publish docs to GitHub Pages](https://github.com/sharplispers/lparallel/pull/14) sharplispers/lparallel#14 
+- [scraper](https://codeberg.org/ggxx/scraper)
 
 # Emacs Lisp
 
