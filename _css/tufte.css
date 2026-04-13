@@ -5,8 +5,8 @@
     --fg: #cad3f5;
     --block-background: var(--gradient-target);
     --header: #f5a97f;
-    --header3: #eed49f;
-    --link: #90708c;
+    --header3: #d1b884; /*  #eed49f; */
+    --link: #d3b0ce; /* #90708c; */
     --gradient-target: #101119;
 }
 
