@@ -30,4 +30,4 @@ of most of my CL scraping code.
 # Emacs Lisp
 
 - [rmoo.el](https://github.com/g-gundam/rmoo) :: This is a minor fork of rmoo.el that works on Emacs 30+. (It probably works on 28+, but I haven't checked.)
-- ctsf.el :: (TODO) This is my wrapper around custom-theme-set-faces.
+- [ctsf.el](https://codeberg.org/ggxx/ctsf.el) :: (TODO) This is my wrapper around custom-theme-set-faces.
