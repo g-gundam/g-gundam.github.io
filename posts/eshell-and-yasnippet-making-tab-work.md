@@ -25,3 +25,21 @@ Unfortunately, in 2026, it wasn't a simple matter of just enabling `yas-global-m
 ```
 
 Previously, I had bound `yas-expand` to a free keybinding that wasn't TAB, but that didn't feel right.  This new way feels better.  Now TAB in eshell will try to `yas-expand` first and then fall back to eshell's default completion behavior.
+
+~~~
+<script src="https://giscus.app/client.js"
+        data-repo="g-gundam/g-gundam.github.io"
+        data-repo-id="R_kgDONjA3jw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDONjA3j84CzOYG"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="catppuccin_macchiato"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+~~~
