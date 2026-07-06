@@ -20,7 +20,8 @@ Unfortunately, in 2026, it wasn't a simple matter of just enabling `yas-global-m
   (interactive)
   (add-to-list 'completion-at-point-functions #'yas-expand))
 
-;; Make eshell try yas-expand before it does tries its other completions.
+;; Make eshell try yas-expand first before 
+;; falling back to eshell's default completion.
 (add-to-list 'eshell-mode-hook #'enable-yas-completion-at-point)
 ```
 
