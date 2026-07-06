@@ -45,7 +45,8 @@
 <pre><code class="language-lisp">&#40;defun enable-yas-completion-at-point &#40;&#41;
   &quot;Add &#96;yas-expand&#39; to &#96;completion-at-point-functions&#39;.&quot;
   &#40;interactive&#41;
-  &#40;add-to-list &#39;completion-at-point-functions #&#39;yas-expand&#41;&#41;;; Make eshell try yas-expand before it does tries its other completions.
+  &#40;add-to-list &#39;completion-at-point-functions #&#39;yas-expand&#41;&#41;;; Make eshell try yas-expand first before 
+;; falling back to eshell&#39;s default completion.
 &#40;add-to-list &#39;eshell-mode-hook #&#39;enable-yas-completion-at-point&#41;</code></pre>
 <p>Previously, I had bound <code>yas-expand</code> to a free keybinding that wasn&#39;t TAB, but that didn&#39;t feel right.  This new way feels better.  Now TAB in eshell will try to <code>yas-expand</code> first and then fall back to eshell&#39;s default completion behavior.</p><script src="https://giscus.app/client.js"
         data-repo="g-gundam/g-gundam.github.io"
