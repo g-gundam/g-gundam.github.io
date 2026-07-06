@@ -23,7 +23,7 @@ When viewing an info document:
 
 ~~~
 <div>
-<video width="100%" id="video05923777870110751" poster="https://world2ch.net/imgboard/thumb/1771949009300s.jpg" src="https://world2ch.net/imgboard/src/1771949009300.webm" autoplay="" controls="" loop="" class="iichan-video-player"></video>
+<video width="100%" id="video05923777870110751" src="/assets/info-nav.webm" autoplay="" controls="" loop="" class="iichan-video-player"></video>
 </div>
 ~~~
 
