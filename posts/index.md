@@ -4,6 +4,7 @@
 
 ## 2026
 
+- [Eshell and YASnippet: Making TAB Work](/posts/eshell-and-yasnippet-making-tab-work/)
 - [info-nav: An Ergonomic Info Reading Experience](/posts/info-nav-ergonomic-reading/)
 
 ## 2025
