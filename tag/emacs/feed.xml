@@ -47,8 +47,21 @@
   &#40;interactive&#41;
   &#40;add-to-list &#39;completion-at-point-functions #&#39;yas-expand&#41;&#41;;; Make eshell try yas-expand before it does tries its other completions.
 &#40;add-to-list &#39;eshell-mode-hook #&#39;enable-yas-completion-at-point&#41;</code></pre>
-<p>Previously, I had bound <code>yas-expand</code> to a free keybinding that wasn&#39;t TAB, but that didn&#39;t feel right.  This new way feels better.  Now TAB in eshell will try to <code>yas-expand</code> first and then fall back to eshell&#39;s default completion behavior.</p>
- ]]>
+<p>Previously, I had bound <code>yas-expand</code> to a free keybinding that wasn&#39;t TAB, but that didn&#39;t feel right.  This new way feels better.  Now TAB in eshell will try to <code>yas-expand</code> first and then fall back to eshell&#39;s default completion behavior.</p><script src="https://giscus.app/client.js"
+        data-repo="g-gundam/g-gundam.github.io"
+        data-repo-id="R_kgDONjA3jw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDONjA3j84CzOYG"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="catppuccin_macchiato"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script> ]]>
   </content:encoded>
     
   <pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>  
