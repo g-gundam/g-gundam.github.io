@@ -98,7 +98,7 @@
 </li>
 </ol>
 <h2 id="screencast">Screencast</h2><div>
-<video width="100%" id="video05923777870110751" poster="https://world2ch.net/imgboard/thumb/1771949009300s.jpg" src="https://world2ch.net/imgboard/src/1771949009300.webm" autoplay="" controls="" loop="" class="iichan-video-player"></video>
+<video width="100%" id="video05923777870110751" src="https://g-gundam.github.io/assets/info-nav.webm" autoplay="" controls="" loop="" class="iichan-video-player"></video>
 </div><p>The end result is that you don&#39;t need to know any keybindings to navigate an info document.  Navigation can be 100&#37; mouse driven &#40;even in the terminal&#41;.</p>
 <h2 id="installation">Installation</h2>
 <pre><code class="language-lisp">&#40;use-package info-nav
