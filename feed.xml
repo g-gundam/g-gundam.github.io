@@ -23,6 +23,45 @@
 
 <item>
   <title>
+    <![CDATA[  Eshell and YASnippet: Making TAB Work  ]]>
+  </title>
+  <link> https://g-gundam.github.io/posts/eshell-and-yasnippet-making-tab-work/index.html </link>
+  <guid> https://g-gundam.github.io/posts/eshell-and-yasnippet-making-tab-work/index.html </guid>
+  <description>
+    <![CDATA[  A small note on integrating yasnippet into eshell.  ]]>
+  </description>  
+  
+  <content:encoded>
+    <![CDATA[  <h1 id="eshell_and_yasnippet_making_tab_work">Eshell and YASnippet: Making TAB Work</h1>
+<p>2026-07-06</p>
+<p>After reading the following blog posts, I wanted to try using <a href="https://github.com/joaotavora/yasnippet">yasnippet</a> in eshell.</p>
+<ul>
+<li><p><a href="https://irreal.org/blog/?p&#61;9773">&#40;irreal&#41; YASnippet in Eshell </a> 2021-06-20</p>
+</li>
+<li><p><a href="https://xenodium.com/yasnippet-in-emacs-eshell/">&#40;xenodium&#41; Blurring the lines between shell and editor</a> 2021-06-19</p>
+</li>
+</ul>
+<p>Unfortunately, in 2026, it wasn&#39;t a simple matter of just enabling <code>yas-global-mode</code> to get YASnippet to work.  I can manually <code>M-x yas-expand</code> but TAB only did eshell&#39;s default completion.  To make the TAB key perform <code>yas-expand</code> while in eshell, I had to add the following Elisp ot my config.</p>
+<pre><code class="language-lisp">&#40;defun enable-yas-completion-at-point &#40;&#41;
+  &quot;Add &#96;yas-expand&#39; to &#96;completion-at-point-functions&#39;.&quot;
+  &#40;interactive&#41;
+  &#40;add-to-list &#39;completion-at-point-functions #&#39;yas-expand&#41;&#41;;; Make eshell try yas-expand before it does tries its other completions.
+&#40;add-to-list &#39;eshell-mode-hook #&#39;enable-yas-completion-at-point&#41;</code></pre>
+<p>Previously, I had bound <code>yas-expand</code> to a free keybinding that wasn&#39;t TAB, but that didn&#39;t feel right.  This new way feels better.  Now TAB in eshell will try to <code>yas-expand</code> first and then fall back to eshell&#39;s default completion behavior.</p>
+ ]]>
+  </content:encoded>
+    
+  <pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name><a href="https://github.com/g-gundam">@g-gundam</a></atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
     <![CDATA[  <code>info-nav</code>: An Ergonomic Info Reading Experience  ]]>
   </title>
   <link> https://g-gundam.github.io/posts/info-nav-ergonomic-reading/index.html </link>
