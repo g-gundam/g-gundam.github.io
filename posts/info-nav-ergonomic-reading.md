@@ -15,8 +15,8 @@ novel way to make info documents easier to read in Emacs.
 
 When viewing an info document:
 
-1. display the table of contents on the left;
-2. display the actual contents on the right.
+1. Display the table of contents on the left.
+2. Display the actual contents on the right.
 3. Make actions in the table of contents window drive navigation on the contents window.
 
 ## Screencast
