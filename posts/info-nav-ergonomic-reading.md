@@ -59,7 +59,7 @@ I really want to see Emacs used more as a platform for delivering Elisp applicat
 - What if you love the command line and don't use Emacs, but you still want to read info documents?
 - Check out [nfo](https://codeberg.org/ggxx/nfo).
   + It is a CLI tool that uses Emacs as a user-friendly replacement for the terminal `info` program.
-  + I made for people who don't even like Emacs but want to read some docs.
+  + I made for people who might not like Emacs but still want to read info documents comfortably.
 
 ~~~
 <script src="https://giscus.app/client.js"
