@@ -119,7 +119,7 @@ I really want to see Emacs used more as a platform for delivering Elisp applicat
 <ul>
 <li><p>It is a CLI tool that uses Emacs as a user-friendly replacement for the terminal <code>info</code> program.</p>
 </li>
-<li><p>I made for people who don&#39;t even like Emacs but want to read some docs.</p>
+<li><p>I made for people who might not like Emacs but still want to read info documents comfortably.</p>
 </li>
 </ul>
 </li>
